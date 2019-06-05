@@ -1,7 +1,7 @@
 import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation'
 import Home from  './Home'
 import Detail from  './Detail'
-// import Auth from './AuthRouter'
+import Login from './Login'
 
 const stackConfig = {
   headerLayoutPreset: 'left',
@@ -15,15 +15,22 @@ const AppNavigator = createStackNavigator({
   stackConfig
 )
 
+const AuthNavigator = createStackNavigator({
+    Login,
+  },
+  stackConfig
+)
+
 const Router = (token: string) =>
   createAppContainer(
     createSwitchNavigator(
       {
+        AuthNavigator,
         AppNavigator,
       },
       {
         headerMode: 'none',
-        initialRouteName: !token ? 'AppNavigator' : 'AppNavigator',
+        initialRouteName: token ? 'AppNavigator' : 'AuthNavigator',
       },
     ),
   )
